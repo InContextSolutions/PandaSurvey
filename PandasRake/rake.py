@@ -10,16 +10,21 @@ class PandasRake:
         self.recodes = recodes
         self.target_pop = target_pop
     
-    def raker(self):
+    def rake(self):
 
-        weights = numpy.ones(len(df))
+        self.weights = pd.DataFrame(self.df)
+        self.weights['weight'] = numpy.ones(len(df))
+        self.count_totals = { i :self.df[i].value_counts() for i in self.df}
+
         weight_diff = 99
         weight_diff_old = 9999999
         while weight_diff < weight_diff_old * (1 - convcrit):
 
             for var in target_pop:
-                weights = rake_on_var( df, weights)
+                for resp in self.weights:
+                    self.weights = self.weights  *sum(self.weights['weight'])
     
+        return self.weights
 
     def rake_on_var(self, df , weights):
         pass
