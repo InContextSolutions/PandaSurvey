@@ -2,7 +2,7 @@ language: python
 python:
     - 2.7
 env:
-    secure: zq/oGD7oRh8FXAoBXaxy06+ugHyTcycK7MGACeYHHTDIZQLq8ftUMcx7hADPzrNvwxeJj0pLB4k8IicrgavTK7aTvPWKujd10S9RIBsaUCb96g0XKd2N4CvcDeILb5zQ+2GNc48c5d4QeMBS2iThm6Ff5lY6+vqcbDM7Oyhu2U76EoEr5zlijp72LutXFjdJMWQbX2vOd5gwe9TArApwAzEgiEhQD9eFxLi/8n1nbuhLjaSBsewrfkuFeHDUgJTMl0dVD6l7EvL40ePnoZd6itVh8am4pse/UoKBsAecH0kS6IuKdkQ6yez/okHFOXQI8zi1Bc4Sp9aqB++QpOdaGw==
+    secure: bMCo5nC48ZPK0QZvxRfjZ21fG4f6/biKVUF8evGP/+SX8vdENHuqh+6Ohb+KFcA8jEgOT1oj/4oOuCThYZWj6QZZSO/J/Hlb57Ul4oAsw23Bmx8JF++mA3jVMpryijMlDIPXBldndvLtqG/yVwGaSKsjUSLSbJR1I5geBdXtG03iJ0RN7osGcRF3pDr4DuPntQV+nkiN2o9TDCaqq8JS0pIh3ZyoatgXEymc3Ns9FjOjDfL69bDVLgeldlrpkbZW2TIhgGvlGLtlhVaf4Z8rOWzNdJWSTDjpkUcCmWgJY8HFrtoW7i7zK89UsEZpg9SLrZNCbYoE7TASRq61SmFdIA==
 before_install:
     - pip install pep8
 install:
@@ -17,11 +17,11 @@ after_success:
     - export PYTHON_VERSION=`python -c "import sys; print(sys.version.split(',')[0])" | awk -F' ' '{print $1}'`
     - export HIPCHAT="https://api.hipchat.com/v1/rooms/message?auth_token=${HIPCHAT_TOKEN}&format=json"
     - export SHORT=`echo $COMMIT | cut -c 1-10`
-    - export HC_PREFIX="room_id=642430&from=Shippable&message=Decipher#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
+    - export HC_PREFIX="room_id=642430&from=Shippable&message=PandasRake#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
     - curl -d "${HC_PREFIX}+build+passed&color=green" $HIPCHAT
 after_failure:
     - export PYTHON_VERSION=`python -c "import sys; print(sys.version.split(',')[0])" | awk -F' ' '{print $1}'`
     - export HIPCHAT="https://api.hipchat.com/v1/rooms/message?auth_token=${HIPCHAT_TOKEN}&format=json"
     - export SHORT=`echo $COMMIT | cut -c 1-10`
-    - export HC_PREFIX="room_id=642430&from=Shippable&message=Decipher#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
+    - export HC_PREFIX="room_id=642430&from=Shippable&message=PandasRake#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
     - curl -d "${HC_PREFIX}+build+passed&color=green" $HIPCHAT
