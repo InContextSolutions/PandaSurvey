@@ -2,6 +2,8 @@ import unittest
 import PandasRake.datasets as datasets
 
 
-def test_load_people():
-    df = datasets.load_people()
-    unittest.assertEqual(df.shape, (9999, 5))
+class TestLoad(unittest.TestCase):
+
+    def test_load_people(self):
+        df = datasets.load_people()
+        self.assertEqual(df.shape, (9999, 6))
