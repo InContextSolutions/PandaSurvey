@@ -1,0 +1,29 @@
+import unittest
+from PandasRake.rake import Rake
+from PandasRake.datasets import load_people
+
+
+class TestPandasRake(unittest.TestCase):
+
+    def setUp(self):
+        self.recodes = {"Age": lambda age: age / 10,
+                        "MaritalStatus": lambda m: m / 2}
+        self.target_pops = {0: .5, 1: .2}
+        self.df = load_people()
+
+    def test_smoke(self):
+        r = Rake(self.df, self.recodes, self.target_pops)
+        self.assertIsNotNone(r)
+
+    def test_recode(self):
+        r = Rake(self.df, self.recodes, self.target_pops)
+        r.recode()
+        self.assertEqual(r.df['Age'].values[0], 8)
+        self.assertEqual(r.df['MaritalStatus'].values[2], 2)
+
+    def test_rake(self):
+        pass
+        #r = Rake(self.df, self.recodes, self.target_pops)
+        # r.recode()
+        #wt = r.rake()
+        #self.assertEqual(len(r.weights), len(wt))
