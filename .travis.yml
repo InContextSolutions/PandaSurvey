@@ -17,11 +17,11 @@ after_success:
     - export PYTHON_VERSION=`python -c "import sys; print(sys.version.split(',')[0])" | awk -F' ' '{print $1}'`
     - export HIPCHAT="https://api.hipchat.com/v1/rooms/message?auth_token=${HIPCHAT_TOKEN}&format=json"
     - export SHORT=`echo $COMMIT | cut -c 1-10`
-    - export HC_PREFIX="room_id=642430&from=Shippable&message=Decipher#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
+    - export HC_PREFIX="room_id=642430&from=Shippable&message=PandasRake#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
     - curl -d "${HC_PREFIX}+build+passed&color=green" $HIPCHAT
 after_failure:
     - export PYTHON_VERSION=`python -c "import sys; print(sys.version.split(',')[0])" | awk -F' ' '{print $1}'`
     - export HIPCHAT="https://api.hipchat.com/v1/rooms/message?auth_token=${HIPCHAT_TOKEN}&format=json"
     - export SHORT=`echo $COMMIT | cut -c 1-10`
-    - export HC_PREFIX="room_id=642430&from=Shippable&message=Decipher#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
+    - export HC_PREFIX="room_id=642430&from=Shippable&message=PandasRake#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
     - curl -d "${HC_PREFIX}+build+passed&color=green" $HIPCHAT
