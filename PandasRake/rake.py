@@ -1,41 +1,39 @@
-import pandas as pd
-import numpy as np
+import numpy
+import pandas
 
 
-class PandasRake:
+class Rake:
 
-    def __init__(self, df, recodes, target_pop , convcrit=.01):
-
+    def __init__(self, df, recodes, target_pop, epsilon=.01, maxiter=1000):
         self.df = df
+        self.rows, self.cols = self.df.shape
         self.recodes = recodes
         self.target_pop = target_pop
-    
-    def rake(self):
+        self.epsilon = epsilon
+        self.maxiter = maxiter
 
-        self.weights = pd.DataFrame(self.df)
-        self.weights['weight'] = numpy.ones(len(df))
-        self.count_totals = { i :self.df[i].value_counts() for i in self.df}
+    def rake(self):
+        self.weights = pandas.DataFrame(self.df)
+        self.weights['weight'] = numpy.ones(self.rows)
+        self.count_totals = {i: self.df[i].value_counts() for i in self.df}
 
         weight_diff = 99
         weight_diff_old = 9999999
-        while weight_diff < weight_diff_old * (1 - convcrit):
+        it = 0
+        while weight_diff < weight_diff_old * (1 - self.epsilon) and it < self.maxiter:
+            it += 1
 
-            for var in target_pop:
+            for var in self.target_pop:
                 for resp in self.weights:
-                    self.weights = self.weights  *sum(self.weights['weight'])
-    
+                    self.weights = self.weights * sum(self.weights['weight'])
+
         return self.weights
 
-    def rake_on_var(self, df , weights):
+    def rake_on_var(self, df, weights):
         pass
 
     def recode(self):
 
         for rec in self.recodes:
-            self.df[rec] = self.df.apply( lambda row: self.recodes[rec](row[rec]), axis=1)
-
-
-
-if __name__ == '__main__':
-    unittest.main()
-
+            self.df[rec] = self.df.apply(
+                lambda row: self.recodes[rec](row[rec]), axis=1)
