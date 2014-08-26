@@ -9,7 +9,7 @@ class PandasRake:
         self.df = df
         self.recodes = recodes
         self.target_pop = target_pop
-
+    
     def raker(self):
 
         weights = numpy.ones(len(df))
@@ -18,7 +18,8 @@ class PandasRake:
         while weight_diff < weight_diff_old * (1 - convcrit):
 
             for var in target_pop:
-                weights = rake_on_var( df, weights,)
+                weights = rake_on_var( df, weights)
+    
 
     def rake_on_var(self, df , weights):
         pass
