@@ -1,0 +1,13 @@
+language: python
+python:
+    - 2.7
+before_install:
+    - pip install pep8
+install:
+    - pip install . --use-mirrors
+script:
+    - python setup.py nosetests --with-cov --cover-package=PandasRake
+    - pep8 --ignore=E501 PandasRake/
+    - pep8 --ignore=E501 tests/
+notifications:
+    email: false
