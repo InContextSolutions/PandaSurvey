@@ -1,6 +1,6 @@
 import os
 from setuptools import setup
-import PandasRake
+import pandasurvey
 
 
 def read(fname):
@@ -18,13 +18,13 @@ tests_require = [
 ]
 
 setup(
-    name="PandasRake",
-    version=PandasRake.__version__,
+    name="pandasurvey",
+    version=pandasurvey.__version__,
     author="InContext Solutions",
     author_email="tristan.wietsma@incontextsolutions.com",
     url="http://www.incontextsolutions.com/",
     description="A survey weighting utility for use with Pandas dataframes",
-    packages=["PandasRake"],
+    packages=["pandasurvey"],
     long_description=read('README.md'),
     setup_requires=['nose'],
     install_requires=install_requires,

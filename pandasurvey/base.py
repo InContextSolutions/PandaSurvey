@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 
-class RakeBase:
+class SurveyWeightBase:
 
     __metaclass__ = ABCMeta
 

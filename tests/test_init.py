@@ -1,5 +1,5 @@
-import PandasRake
+import pandasurvey
 
 
 def test_version():
-    assert PandasRake.__version__ is not None, "no version found"
+    assert pandasurvey.__version__ is not None, "no version found"

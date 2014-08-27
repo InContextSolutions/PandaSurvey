@@ -8,8 +8,8 @@ before_install:
 install:
     - pip install . --use-mirrors
 script:
-    - python setup.py nosetests --with-cov --cover-package=PandasRake
-    - pep8 --ignore=E501 PandasRake/
+    - python setup.py nosetests --with-cov --cover-package=pandasurvey
+    - pep8 --ignore=E501 pandasurvey/
     - pep8 --ignore=E501 tests/
 notifications:
     email: false
@@ -17,11 +17,11 @@ after_success:
     - export PYTHON_VERSION=`python -c "import sys; print(sys.version.split(',')[0])" | awk -F' ' '{print $1}'`
     - export HIPCHAT="https://api.hipchat.com/v1/rooms/message?auth_token=${HIPCHAT_TOKEN}&format=json"
     - export SHORT=`echo $COMMIT | cut -c 1-10`
-    - export HC_PREFIX="room_id=642430&from=Shippable&message=PandasRake#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
+    - export HC_PREFIX="room_id=642430&from=Shippable&message=pandasurvey#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
     - curl -d "${HC_PREFIX}+build+passed&color=green" $HIPCHAT
 after_failure:
     - export PYTHON_VERSION=`python -c "import sys; print(sys.version.split(',')[0])" | awk -F' ' '{print $1}'`
     - export HIPCHAT="https://api.hipchat.com/v1/rooms/message?auth_token=${HIPCHAT_TOKEN}&format=json"
     - export SHORT=`echo $COMMIT | cut -c 1-10`
-    - export HC_PREFIX="room_id=642430&from=Shippable&message=PandasRake#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
+    - export HC_PREFIX="room_id=642430&from=Shippable&message=pandasurvey#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
     - curl -d "${HC_PREFIX}+build+passed&color=green" $HIPCHAT

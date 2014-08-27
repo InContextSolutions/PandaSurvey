@@ -1,10 +1,10 @@
 import numpy
 import pandas
-from PandasRake.base import RakeBase
-from PandasRake.mixins.recode import RecodeMixin
+from pandasurvey.base import SurveyWeightBase
+from pandasurvey.mixins.recode import RecodeMixin
 
 
-class SimpleRake(RakeBase, RecodeMixin):
+class SimpleRake(SurveyWeightBase, RecodeMixin):
 
     def __init__(self, df, recodes, target_pop, key_col, epsilon=.01, maxiter=1000):
         self.df = df
