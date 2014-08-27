@@ -7,7 +7,10 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
-install_requires = []
+install_requires = [
+    'numpy',
+    'pandas'
+]
 
 tests_require = [
     'nose',
@@ -19,7 +22,7 @@ setup(
     version=PandasRake.__version__,
     author="InContext Solutions",
     author_email="tristan.wietsma@incontextsolutions.com",
-    url="",
+    url="http://www.incontextsolutions.com/",
     description="A survey weighting utility for use with Pandas dataframes",
     packages=["PandasRake"],
     long_description=read('README.md'),
