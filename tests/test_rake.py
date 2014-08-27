@@ -25,9 +25,9 @@ class TestPandasRake(unittest.TestCase):
         self.assertEqual(r.df['MaritalStatus'].values[2], 2)
 
     def test_rake(self):
-#################
-# will build better test cases here
-################
+        #
+        # will build better test cases here
+        #
         r = Rake(self.df, self.recodes, self.target_pops, maxiter=100)
         r.recode()
         wt = r.rake()
