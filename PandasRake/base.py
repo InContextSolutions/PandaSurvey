@@ -9,5 +9,5 @@ class RakeBase:
         pass
 
     @abstractmethod
-    def calc_weights(self):
+    def calc(self):
         pass

@@ -6,13 +6,14 @@ from PandasRake.mixins.recode import RecodeMixin
 
 class SimpleRake(RakeBase, RecodeMixin):
 
-    def __init__(self, df, recodes, target_pop, epsilon=.01, maxiter=1000):
+    def __init__(self, df, recodes, target_pop, key_col, epsilon=.01, maxiter=1000):
         self.df = df
         self.rows, self.cols = self.df.shape
         self.recodes = recodes
         self.target_pop = target_pop
         self.epsilon = epsilon
         self.maxiter = maxiter
+        self.key_col = key_col
 
     def calc(self):
         temp_df = pandas.DataFrame(self.df)
@@ -37,5 +38,5 @@ class SimpleRake(RakeBase, RecodeMixin):
             weight_diff_old = weight_diff
             weight_diff = sum(abs(temp_df['weight'].values - weight_old))
 
-        self.weights = temp_df[['PrimaryKey', 'weight']]
+        self.weights = temp_df[[self.key_col, 'weight']]
         return self.weights
