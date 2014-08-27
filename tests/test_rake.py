@@ -23,7 +23,7 @@ class TestPandasRake(unittest.TestCase):
 
     def test_rake(self):
         pass
-        #r = Rake(self.df, self.recodes, self.target_pops)
+        # r = Rake(self.df, self.recodes, self.target_pops)
         # r.recode()
-        #wt = r.rake()
-        #self.assertEqual(len(r.weights), len(wt))
+        # wt = r.rake()
+        # self.assertEqual(len(r.weights), len(wt))
