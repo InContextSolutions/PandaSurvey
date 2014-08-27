@@ -1,5 +1,5 @@
 import unittest
-from PandasRake.rake import Rake
+from PandasRake.simplerake import SimpleRake
 from PandasRake.datasets import load_people
 
 
@@ -15,11 +15,11 @@ class TestPandasRake(unittest.TestCase):
         self.df = load_people()
 
     def test_smoke(self):
-        r = Rake(self.df, self.recodes, self.target_pops)
+        r = SimpleRake(self.df, self.recodes, self.target_pops)
         self.assertIsNotNone(r)
 
     def test_recode(self):
-        r = Rake(self.df, self.recodes, self.target_pops)
+        r = SimpleRake(self.df, self.recodes, self.target_pops)
         r.recode()
         self.assertEqual(r.df['Age'].values[0], 8)
         self.assertEqual(r.df['MaritalStatus'].values[2], 2)
@@ -28,7 +28,7 @@ class TestPandasRake(unittest.TestCase):
         #
         # will build better test cases here
         #
-        r = Rake(self.df, self.recodes, self.target_pops, maxiter=10)
+        r = SimpleRake(self.df, self.recodes, self.target_pops, maxiter=10)
         r.recode()
-        wt = r.rake()
+        wt = r.calc()
         self.assertEqual(len(r.weights), len(wt))

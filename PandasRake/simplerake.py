@@ -1,8 +1,10 @@
 import numpy
 import pandas
+from PandasRake.base import RakeBase
+from PandasRake.mixins.recode import RecodeMixin
 
 
-class Rake:
+class SimpleRake(RakeBase, RecodeMixin):
 
     def __init__(self, df, recodes, target_pop, epsilon=.01, maxiter=1000):
         self.df = df
@@ -12,7 +14,7 @@ class Rake:
         self.epsilon = epsilon
         self.maxiter = maxiter
 
-    def rake(self):
+    def calc(self):
         temp_df = pandas.DataFrame(self.df)
         temp_df['weight'] = numpy.ones(self.rows)
 
@@ -37,9 +39,3 @@ class Rake:
 
         self.weights = temp_df[['PrimaryKey', 'weight']]
         return self.weights
-
-    def recode(self):
-
-        for rec in self.recodes:
-            self.df[rec] = self.df.apply(
-                lambda row: self.recodes[rec](row[rec]), axis=1)
