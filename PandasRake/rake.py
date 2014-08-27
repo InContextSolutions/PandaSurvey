@@ -13,24 +13,30 @@ class Rake:
         self.maxiter = maxiter
 
     def rake(self):
-        self.weights = pandas.DataFrame(self.df)
-        self.weights['weight'] = numpy.ones(self.rows)
-        self.count_totals = {i: self.df[i].value_counts() for i in self.df}
+        temp_df = pandas.DataFrame(self.df)
+        temp_df['weight'] = numpy.ones(self.rows)
 
         weight_diff = 99
         weight_diff_old = 9999999
         it = 0
         while weight_diff < weight_diff_old * (1 - self.epsilon) and it < self.maxiter:
             it += 1
+            weight_old = temp_df['weight'].values.tolist()
 
             for var in self.target_pop:
-                for resp in self.weights:
-                    self.weights = self.weights * sum(self.weights['weight'])
+                h = temp_df.groupby(var)
+                temp_df['weight'] = temp_df.apply(
+                    lambda row: self.target_pop[var][row[var]] *
+                    row['weight'] /
+                    (h.get_group(row[var]).sum()['weight'] / self.rows),
+                    axis=1
+                )
 
+            weight_diff_old = weight_diff
+            weight_diff = sum(abs(temp_df['weight'].values - weight_old))
+
+        self.weights = temp_df[['PrimaryKey', 'weight']]
         return self.weights
-
-    def rake_on_var(self, df, weights):
-        pass
 
     def recode(self):
 
