@@ -28,7 +28,7 @@ class TestPandasRake(unittest.TestCase):
         #
         # will build better test cases here
         #
-        r = Rake(self.df, self.recodes, self.target_pops, maxiter=100)
+        r = Rake(self.df, self.recodes, self.target_pops, maxiter=10)
         r.recode()
         wt = r.rake()
         self.assertEqual(len(r.weights), len(wt))
