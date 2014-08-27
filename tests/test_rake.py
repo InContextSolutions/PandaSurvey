@@ -8,7 +8,10 @@ class TestPandasRake(unittest.TestCase):
     def setUp(self):
         self.recodes = {"Age": lambda age: age / 10,
                         "MaritalStatus": lambda m: m / 2}
-        self.target_pops = {0: .5, 1: .2}
+        self.target_pops = {
+
+            "Gender": {1: .4916, 2: .5084}
+        }
         self.df = load_people()
 
     def test_smoke(self):
@@ -22,8 +25,10 @@ class TestPandasRake(unittest.TestCase):
         self.assertEqual(r.df['MaritalStatus'].values[2], 2)
 
     def test_rake(self):
-        pass
-        #r = Rake(self.df, self.recodes, self.target_pops)
-        # r.recode()
-        #wt = r.rake()
-        #self.assertEqual(len(r.weights), len(wt))
+#################
+# will build better test cases here
+################
+        r = Rake(self.df, self.recodes, self.target_pops, maxiter=100)
+        r.recode()
+        wt = r.rake()
+        self.assertEqual(len(r.weights), len(wt))

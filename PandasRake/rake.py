@@ -14,23 +14,34 @@ class Rake:
 
     def rake(self):
         self.weights = pandas.DataFrame(self.df)
-        self.weights['weight'] = numpy.ones(self.rows)
-        self.count_totals = {i: self.df[i].value_counts() for i in self.df}
+        fractions = {}
+        for cols in self.weights:
+            if 'key' not in cols.lower():
+                fractions[cols] = {}
+                for group in self.weights.groupby(cols):
+                    fractions[cols][group[0]] = len(group[1]) * 1. / self.rows
 
+        self.weights['weight'] = numpy.ones(self.rows)
         weight_diff = 99
         weight_diff_old = 9999999
         it = 0
         while weight_diff < weight_diff_old * (1 - self.epsilon) and it < self.maxiter:
             it += 1
+            weight_old = self.weights['weight'].values.tolist()
 
             for var in self.target_pop:
-                for resp in self.weights:
-                    self.weights = self.weights * sum(self.weights['weight'])
+                self.weights['weight'] = self.weights.apply(
+                    lambda row: self.target_pop[var][row[var]] * row[
+                        'weight'] / fractions[var][row[var]], axis=1
+                )
 
-        return self.weights
+            weight_diff_old = weight_diff
+            weight_diff = sum(abs(self.weights['weight'].values - weight_old))
 
-    def rake_on_var(self, df, weights):
-        pass
+        if it == self.maxiter:
+            print 'iterlimit'
+        print 'itttt   ', it
+        return self.weights[['PrimaryKey', 'weight']]
 
     def recode(self):
 
