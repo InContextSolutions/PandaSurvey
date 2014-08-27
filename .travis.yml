@@ -2,14 +2,14 @@ language: python
 python:
     - 2.7
 env:
-    secure: bMCo5nC48ZPK0QZvxRfjZ21fG4f6/biKVUF8evGP/+SX8vdENHuqh+6Ohb+KFcA8jEgOT1oj/4oOuCThYZWj6QZZSO/J/Hlb57Ul4oAsw23Bmx8JF++mA3jVMpryijMlDIPXBldndvLtqG/yVwGaSKsjUSLSbJR1I5geBdXtG03iJ0RN7osGcRF3pDr4DuPntQV+nkiN2o9TDCaqq8JS0pIh3ZyoatgXEymc3Ns9FjOjDfL69bDVLgeldlrpkbZW2TIhgGvlGLtlhVaf4Z8rOWzNdJWSTDjpkUcCmWgJY8HFrtoW7i7zK89UsEZpg9SLrZNCbYoE7TASRq61SmFdIA==
+    secure: Vfzi0GBJMyCj9079XCoUDoEfhmqGu4MSYEgr07yWxfKZR9g9mB35XxM5fAk2X6Qk/2ltfdSIpDNBJts+/6uXJWHShFDlh9ha6QWJkg/4B5esi9mvGuNolhzDhmzkKLUpWpRVn+NjVbR3MwM7iWkz2ajEFtHsVLl3DEtkEjKNliUPqzzDQRojMbS1F1W4U+N5y+XmS/8je3iYSSA0WDlqsTkTrhMNkHsb6z0VSaMV6qStxzIXPHO3wP9jlvX+yYtIS2IFN/h+fbDewbn8D5akBTimH9Ey1lWTvwIuCtXwrT5eg1AFvAjOFW4exOKZ4wkuHjmk7gvjF3x75sopI4jjCg==
 before_install:
     - pip install pep8
 install:
     - pip install . --use-mirrors
 script:
-    - python setup.py nosetests --with-cov --cover-package=PandasRake
-    - pep8 --ignore=E501 PandasRake/
+    - python setup.py nosetests --with-cov --cover-package=pandasurvey
+    - pep8 --ignore=E501 pandasurvey/
     - pep8 --ignore=E501 tests/
 notifications:
     email: false
@@ -17,11 +17,11 @@ after_success:
     - export PYTHON_VERSION=`python -c "import sys; print(sys.version.split(',')[0])" | awk -F' ' '{print $1}'`
     - export HIPCHAT="https://api.hipchat.com/v1/rooms/message?auth_token=${HIPCHAT_TOKEN}&format=json"
     - export SHORT=`echo $COMMIT | cut -c 1-10`
-    - export HC_PREFIX="room_id=642430&from=Shippable&message=PandasRake#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
+    - export HC_PREFIX="room_id=642430&from=Shippable&message=pandasurvey#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
     - curl -d "${HC_PREFIX}+build+passed&color=green" $HIPCHAT
 after_failure:
     - export PYTHON_VERSION=`python -c "import sys; print(sys.version.split(',')[0])" | awk -F' ' '{print $1}'`
     - export HIPCHAT="https://api.hipchat.com/v1/rooms/message?auth_token=${HIPCHAT_TOKEN}&format=json"
     - export SHORT=`echo $COMMIT | cut -c 1-10`
-    - export HC_PREFIX="room_id=642430&from=Shippable&message=PandasRake#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
+    - export HC_PREFIX="room_id=642430&from=Shippable&message=pandasurvey#${BUILD_NUMBER}+(${BRANCH}:${SHORT}:python=${PYTHON_VERSION})"
     - curl -d "${HC_PREFIX}+build+passed&color=green" $HIPCHAT

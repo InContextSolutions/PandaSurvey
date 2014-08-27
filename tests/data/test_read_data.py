@@ -1,5 +1,5 @@
 import unittest
-import PandasRake.datasets as datasets
+import pandasurvey.datasets as datasets
 
 
 class TestLoad(unittest.TestCase):

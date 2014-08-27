@@ -1,9 +1,9 @@
 import unittest
-from PandasRake.simplerake import SimpleRake
-from PandasRake.datasets import load_people
+from pandasurvey.rake.simple import SimpleRake
+from pandasurvey.datasets import load_people
 
 
-class TestPandasRake(unittest.TestCase):
+class Testpandasurvey(unittest.TestCase):
 
     def setUp(self):
         self.recodes = {"Age": lambda age: age / 10,
