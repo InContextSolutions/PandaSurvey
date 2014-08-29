@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy
 import matplotlib.pyplot as pl
+from pandasurvey.datasets import *
 
 
 def bootstrap(sample_size, df, key_column='TicketIdent', weight_column='nweight'):
@@ -60,27 +61,29 @@ def main():
                                     "RespondentKey")
     own = []
     report = []
-    orignal_sample = []
-    for i in range(100):
+    original_sample = []
+    demographic = 'Gender'
+    target_demographic_value = 2
+    for i in range(200):
 
-        own.append(bootrapped_weight_propoortions(tots, 'RespondentKey', 'weight','Gender', 2))
+        own.append(bootrapped_weight_propoortions(tots, 'RespondentKey', 'weight', demographic, target_demographic_value))
 
-        report.append(bootrapped_weight_propoortions(tots, 'RespondentKey', 'Weight','Gender', 2))
+        report.append(bootrapped_weight_propoortions(tots, 'RespondentKey', 'Weight', demographic, target_demographic_value))
 
-        orignal_sample.append(bootstrapped_proportions(tots, 'RespondentKey', 'Gender',2))
+        original_sample.append(bootstrapped_proportions(tots, 'RespondentKey', demographic, target_demographic_value))
 
-    print own
-    print report
-    print orignal_sample
+
+    targets = load_target_weights()
+    target_proportion = targets[demographic][target_demographic_value]
     f, (ax1, ax2, ax3) = pl.subplots(3, sharex=True, sharey=True)
-    f.suptitle('Gender proportions bootstrapped')
-    ax1.hist(own)
-    ax1.set_title('pandasurvey')
-    ax2.hist(report)
-    ax2.set_title('Report Engine')
-    ax3.hist(orignal_sample)
-    ax3.set_title('Sample Proportions')
-    f.subplots_adjust(hspace=0)
+    f.suptitle('Gender proportions bootstrapped: Target proportion : ' + str(target_proportion) )
+    ax1.hist(own,color ='crimson')
+    ax1.set_title('pandasurvey mean: ' + str(numpy.mean(own))+" | median : " + str(numpy.median(own)) + " | std : " + str(numpy.std(own)) )
+    ax2.hist(report, color = 'burlywood')
+    ax2.set_title('Report Engine' + str(numpy.mean(report))+" | median : " + str(numpy.median(report)) + " | std : " + str(numpy.std(report)))
+    ax3.hist(original_sample, color = 'chartreuse')
+    ax3.set_title('Sample Proportions' + str(numpy.mean(original_sample))+" | median : " + str(numpy.median(original_sample)) + " | std : " + str(numpy.std(original_sample)))
+    f.subplots_adjust(hspace=2)
     pl.show()
 
 

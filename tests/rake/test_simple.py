@@ -23,11 +23,20 @@ class Test_simple(unittest.TestCase):
                                     "RespondentKey")
         pandasurvey_sample = []
         reportengine_sample = []
-        original_sample =[]
+        orignal_sample = []
+        demographic = 'Gender'
+        target_demographic_value = 2
         for i in range(100):
 
-            pandasurvey_sample.append(bootrapped_propoortions(tots, 'RespondentKey', 'weight','Gender', 2) )
+            pandasurvey_sample.append(bootrapped_weight_propoortions(tots, 'RespondentKey', 'weight', 
+                                                            demographic, target_demographic_value))
 
-            reportengine_sample.append(bootrapped_propoortions(tots, 'RespondentKey', 'Weight','Gender', 2))
+            reportengine_sample.append(bootrapped_weight_propoortions(tots, 'RespondentKey', 'Weight', 
+                                                            demographic, target_demographic_value))
 
-            original_sample.append()
+            orignal_sample.append(bootstrapped_proportions(tots, 'RespondentKey', 
+                                                            demographic, target_demographic_value))
+
+        targets = datasets.load_target_weights()
+        print 'target weight  :' + targets[demographic][target_demographic_value]
+        print 'pandasurvey mean/median/standard DEV'
