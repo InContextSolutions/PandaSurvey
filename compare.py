@@ -35,11 +35,11 @@ def bootrapped_weight_propoortions(df, key_column, weight_column, proportion_col
         len(df), df, weight_column='weight', key_column="RespondentKey")
     own_temp = [df[df.RespondentKey == k][
         [weight_column, proportion_column]].values for k in keys]
-    temp =
+    temp =[]
     for i in own_temp:
         if i[0][1] == target_value:
             temp.append(i[0][0])
-    return s / sum(map(lambda i: i[0][0], own_temp)) 
+    return sum(temp) / sum(map(lambda i: i[0][0], own_temp)) 
 
 def bootstrapped_proportions(df, key_column, proportion_column, target_value ):
 
@@ -47,7 +47,7 @@ def bootstrapped_proportions(df, key_column, proportion_column, target_value ):
         len(df), df, weight_column='NA', key_column="RespondentKey")
     own_temp = [df[df.RespondentKey == k][
         [ proportion_column]].values for k in keys]
-    return len(df.query(proportion_column + "=="+str(target_value))/len(df) 
+    return own_temp.count(target_value)*1./len(df) 
 
 def compare_weight_proportions():
     pass
@@ -60,20 +60,26 @@ def main():
                                     "RespondentKey")
     own = []
     report = []
-    for i in range(2):
+    orignal_sample = []
+    for i in range(100):
 
         own.append(bootrapped_weight_propoortions(tots, 'RespondentKey', 'weight','Gender', 2))
 
         report.append(bootrapped_weight_propoortions(tots, 'RespondentKey', 'Weight','Gender', 2))
 
-        orignal_sample(bootstrapped_proportions(tots, 'RespondentKey', ))
+        orignal_sample.append(bootstrapped_proportions(tots, 'RespondentKey', 'Gender',2))
 
     print own
     print report
-    f, (ax1, ax2) = pl.subplots(2, sharex=True, sharey=True)
+    print orignal_sample
+    f, (ax1, ax2, ax3) = pl.subplots(3, sharex=True, sharey=True)
+    f.suptitle('Gender proportions bootstrapped')
     ax1.hist(own)
-    ax1.set_title('first is the pandasurvey')
+    ax1.set_title('pandasurvey')
     ax2.hist(report)
+    ax2.set_title('Report Engine')
+    ax3.hist(orignal_sample)
+    ax3.set_title('Sample Proportions')
     f.subplots_adjust(hspace=0)
     pl.show()
 
