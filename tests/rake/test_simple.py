@@ -3,7 +3,8 @@ from pandasurvey.rake.simple import SimpleRake
 from pandasurvey.utils.bootstrap import bootstrap
 import pandasurvey.datasets as datasets
 
-class Test_simple(unittest.TestCase):
+
+class Test_Simple(unittest.TestCase):
 
     def test_rake(self):
         #
@@ -17,7 +18,7 @@ class Test_simple(unittest.TestCase):
 
         self.assertEqual(42,42)
 
-    def test_rake_from_csv(self):
+    def test_simplerake_from_csv(self):
         df = merged_datasets_by_path('pandasurvey/datasets/www.csv',
                                    'pandasurvey/datasets/study_1614.csv',
                                     "RespondentKey")
@@ -39,4 +40,4 @@ class Test_simple(unittest.TestCase):
 
         targets = datasets.load_target_weights()
         print 'target weight  :' + targets[demographic][target_demographic_value]
-        print 'pandasurvey mean/median/standard DEV'
+        print 'pandasurvey mean/median/standard DEV' + str(np)

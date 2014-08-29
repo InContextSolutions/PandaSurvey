@@ -1,60 +1,14 @@
+import math
 import pandas as pd
 import numpy
+import scipy.stats as stats
 import matplotlib.pyplot as pl
 from pandasurvey.datasets import *
+from pandasurvey.utils.bootstrap import *
 
 
-def bootstrap(sample_size, df, key_column='TicketIdent', weight_column='nweight'):
-    if weight_column in df.columns.tolist():
-        wt = df[[weight_column]].values.ravel()
-        wt /= wt.sum()
-        idx = numpy.random.choice(
-            range(len(df)), size=sample_size, replace=True, p=wt)
-    else:
-        idx = numpy.random.choice(
-            range(len(df)), size=sample_size, replace=True)
 
-    if key_column is not None:
-        keys = [k.upper()
-                for k in df[[key_column]].iloc[idx].values.ravel()]
-    else:
-        index = df.index.tolist()
-        keys = [index[i] for i in idx]
-    return keys
-
-
-def merged_datasets_by_path(path_one, path_two, key_column):
-    my_res = pd.read_csv(path_one)
-    the_res = pd.read_csv(path_two)
-    return pd.merge(
-        my_res, the_res, left_on=key_column, right_on=key_column)
-
-
-def bootrapped_weight_propoortions(df, key_column, weight_column, proportion_column, target_value):
-
-    keys = bootstrap(
-        len(df), df, weight_column='weight', key_column="RespondentKey")
-    own_temp = [df[df.RespondentKey == k][
-        [weight_column, proportion_column]].values for k in keys]
-    temp =[]
-    for i in own_temp:
-        if i[0][1] == target_value:
-            temp.append(i[0][0])
-    return sum(temp) / sum(map(lambda i: i[0][0], own_temp)) 
-
-def bootstrapped_proportions(df, key_column, proportion_column, target_value ):
-
-    keys = bootstrap(
-        len(df), df, weight_column='NA', key_column="RespondentKey")
-    own_temp = [df[df.RespondentKey == k][
-        [ proportion_column]].values for k in keys]
-    return own_temp.count(target_value)*1./len(df) 
-
-def compare_weight_proportions():
-    pass
-
-def main():
-    #modulize and stuff
+def plot_gender_prop():
 
     tots = merged_datasets_by_path('pandasurvey/datasets/www.csv',
                                    'pandasurvey/datasets/study_1614.csv',
@@ -84,7 +38,19 @@ def main():
     ax3.hist(original_sample, color = 'chartreuse')
     ax3.set_title('Sample Proportions' + str(numpy.mean(original_sample))+" | median : " + str(numpy.median(original_sample)) + " | std : " + str(numpy.std(original_sample)))
     f.subplots_adjust(hspace=2)
+    pl.show()    
+
+def weight_regress():
+
+    thirty = pd.merge( load_thirtyiters(),load_rengine_weights(), on="RespondentKey" )
+    pl.plot(thirty['weight'].tolist(), thirty['Weight'].tolist(), 'rs')
+    slope, intercept, r_value, p_value, std_err = stats.linregress(thirty['weight'].tolist(), thirty['Weight'].tolist())
+    pl.title('R value : '+ str(r_value))
     pl.show()
+
+def main():
+    #modulize and stuff
+    weight_regress()
 
 
 if __name__ == '__main__':
