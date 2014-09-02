@@ -26,9 +26,11 @@ def load_target_weights():
         ret['Cell'][i] = 1. / len(ret['Cell'])
     return ret
 
+
 def load_teniters():
     path = os.path.join(THIS_DIRECTORY, "teniter_cellweights.csv")
     return pandas.read_csv(path)
+
 
 def load_thirtyiters():
     path = os.path.join(THIS_DIRECTORY, "thirtyiter_weights.csv")

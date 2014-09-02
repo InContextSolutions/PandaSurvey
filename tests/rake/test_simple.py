@@ -13,7 +13,7 @@ class Test_Simple(unittest.TestCase):
         target_weights = datasets.load_target_weights()
         target_weights['StudyCellId'] = target_weights.pop('Cell')
         r = SimpleRake(
-            datasets.load_rengine_weights(), {}, target_weights, 'RespondentKey', maxiter=10)
+            datasets.load_rengine_weights(), target_weights, 'RespondentKey', maxiter=10)
         r.df.dropna(inplace=True)
         r.calc()
         compare_df = pd.merge(r.df, r.weights, on='RespondentKey')
@@ -36,4 +36,4 @@ class Test_Simple(unittest.TestCase):
             (np.array(simple_sample) - np.array(targets)) ** 2).mean()
         report_mse = (
             (np.array(report_sample) - np.array(targets)) ** 2).mean()
-        self.assertLessEqual(simple_mse report_mse)
+        self.assertLessEqual(simple_mse , report_mse)
