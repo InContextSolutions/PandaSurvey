@@ -1,4 +1,5 @@
 import math
+from functools import partial
 import numpy
 import pandas
 import matplotlib.pyplot as pl
@@ -19,62 +20,35 @@ class SimpleRake(SurveyWeightBase, RecodeMixin, PandasMixin):
         self.key_col = key_col
 
     def calc(self):
-        temp_df = pandas.DataFrame(self.df)
+        temp_df = self.df.copy()
         self.rows = len(temp_df)
         temp_df['weight'] = numpy.ones(self.rows)
 
         weight_diff = 99
         weight_diff_old = 9999999
         it = 0
+        self.weight_hist = []
         while weight_diff < weight_diff_old * (1 - self.epsilon) and it < self.maxiter:
             it += 1
             weight_old = temp_df['weight'].values.tolist()
-            for i in weight_old:
-                if math.isnan(i):
-                    return weight_old
 
             for var in self.target_pop:
                 h = temp_df.groupby(var)
-                print temp_df[['StudyTicketId', 'weight']]
-                print var
+                group_sums = {group[0]: group[1].sum()['weight'] for group in temp_df.groupby(var)}
 
                 def my_func(row):
                     if int(row[var]) in self.target_pop[var]:
-                        return self.target_pop[var][int(row[var])] * row['weight'] / (h.get_group(int(row[var])).sum()['weight'] / self.rows)
+                        return self.target_pop[var][int(row[var])] * row['weight'] / (group_sums[int(row[var])] / self.rows)
                     return row['weight']
                 temp_df['weight'] = temp_df.apply(my_func, axis=1)
 
             weight_diff_old = weight_diff
             weight_diff = sum(abs(temp_df['weight'].values - weight_old))
+            self.weight_hist.append(weight_diff)
             print "iterations   : ", it
             print weight_diff, weight_diff_old * (1 - self.epsilon)
         self.weights = temp_df[[self.key_col, 'weight']]
         return self.weights
-    """
-    def compare_things(self, iterations):
-        # move to tests and most likely broken, had moved to compare.py
-        own = []
-        report = []
-        for i in range:
-            keys = self.bootstrap(self.df, weight_column='weight')
-            own_temp = numpy.mean(
-                [self.df.at[k, 'Gender'] * self.df.at[k, 'weight'] for k in keys])
-            own.append(own_temp)
 
-            keys = self.bootstrap(self.df, weight_column='Weight')
-            report_temp = numpy.mean(
-                [self.df.at[k, 'Gender'] * self.df.at[k, 'Weight'] for k in keys])
-            report.append(report_temp)
-
-        o = pl.figure(1)
-        o.hist(own)
-
-        r = pl.figure(2)
-        r.hist(report)
-
-        pl.show()
-
-        pass
-    """
     def weighting_loss(self):
         return len(self.weights) * sum(self.weights['weight'].values ** 2) / self.weights.sum()['weight'] ** -1

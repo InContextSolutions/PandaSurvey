@@ -1,4 +1,6 @@
 import unittest
+import numpy as np
+import pandas as pd
 from pandasurvey.rake.simple import SimpleRake
 from pandasurvey.utils.bootstrap import bootstrap
 import pandasurvey.datasets as datasets
@@ -6,38 +8,32 @@ import pandasurvey.datasets as datasets
 
 class Test_Simple(unittest.TestCase):
 
-    def test_rake(self):
-        #
-        # will build better test cases here
-        #
-#        r = SimpleRake(
-#            datasets.load_rengine_weights(), {}, datasets.load_target_weights(), 'RespondentKey', maxiter=10)
-#        wt = r.calc()
-#        print wt
-#        self.assertEqual(len(r.weights), len(wt))
+    def test_simplerake_10iters(self):
 
-        self.assertEqual(42,42)
+        target_weights = datasets.load_target_weights()
+        target_weights['StudyCellId'] = target_weights.pop('Cell')
+        r = SimpleRake(
+            datasets.load_rengine_weights(), {}, target_weights, 'RespondentKey', maxiter=10)
+        r.df.dropna(inplace=True)
+        r.calc()
+        compare_df = pd.merge(r.df, r.weights, on='RespondentKey')
 
-    def test_simplerake_from_csv(self):
-        df = merged_datasets_by_path('pandasurvey/datasets/www.csv',
-                                   'pandasurvey/datasets/study_1614.csv',
-                                    "RespondentKey")
-        pandasurvey_sample = []
-        reportengine_sample = []
-        orignal_sample = []
-        demographic = 'Gender'
-        target_demographic_value = 2
-        for i in range(100):
+        simple_sample = []
+        report_sample = []
+        targets = []
+        for demo in target_weights:
 
-            pandasurvey_sample.append(bootrapped_weight_propoortions(tots, 'RespondentKey', 'weight', 
-                                                            demographic, target_demographic_value))
+            for value in target_weights[demo]:
 
-            reportengine_sample.append(bootrapped_weight_propoortions(tots, 'RespondentKey', 'Weight', 
-                                                            demographic, target_demographic_value))
+                # for found proportions
+                simple_sample.append(
+                    compare_df.query(demo + "==" + str(value)).sum()['weight'] / compare_df.sum()['weight'])
+                report_sample.append(
+                    compare_df.query(demo + "==" + str(value)).sum()['Weight'] / compare_df.sum()['Weight'])
+                targets.append(target_weights[demo][value])
 
-            orignal_sample.append(bootstrapped_proportions(tots, 'RespondentKey', 
-                                                            demographic, target_demographic_value))
-
-        targets = datasets.load_target_weights()
-        print 'target weight  :' + targets[demographic][target_demographic_value]
-        print 'pandasurvey mean/median/standard DEV' + str(np)
+        simple_mse = (
+            (np.array(simple_sample) - np.array(targets)) ** 2).mean()
+        report_mse = (
+            (np.array(report_sample) - np.array(targets)) ** 2).mean()
+        self.assertLessEqual(simple_mse report_mse)
