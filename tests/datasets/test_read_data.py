@@ -14,6 +14,10 @@ class TestLoad(unittest.TestCase):
         self.assertEqual(len(targets), 5)
         self.assertEqual(len(targets['Age']), 5)
 
+    def test_load_sample_weights(self):
+        df = datasets.load_sample_weights()
+        self.assertEqual(df.shape, (2092,))
+
     def test_load_sample_study(self):
         df = datasets.load_sample_study()
         self.assertEqual(df.shape, (2092, 6))
