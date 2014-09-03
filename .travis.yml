@@ -12,7 +12,8 @@ script:
     - python setup.py nosetests --with-cov --cover-package=pandasurvey
     - pep8 --ignore=E501 pandasurvey/
     - pep8 --ignore=E501 tests/
-    - pyflakes .
+    - pyflakes pandasurvey/
+    - pyflakes tests/
 notifications:
     email: false
 after_success:
