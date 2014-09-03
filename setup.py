@@ -9,19 +9,19 @@ def read(fname):
 
 install_requires = [
     'numpy',
-    'pandas'
+    'pandas',
 ]
 
 tests_require = [
     'nose',
-    'coverage'
+    'coverage',
+    'pyflakes',
 ]
 
 setup(
     name="pandasurvey",
     version=pandasurvey.__version__,
     author="InContext Solutions",
-    author_email="tristan.wietsma@incontextsolutions.com",
     url="http://www.incontextsolutions.com/",
     description="A survey weighting utility for use with Pandas dataframes",
     packages=["pandasurvey"],

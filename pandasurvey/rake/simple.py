@@ -1,42 +1,39 @@
 import numpy
-import pandas
 from pandasurvey.base import SurveyWeightBase
 from pandasurvey.mixins.recode import RecodeMixin
 
 
 class SimpleRake(SurveyWeightBase, RecodeMixin):
 
-    def __init__(self, df, recodes, target_pop, key_col, epsilon=.01, maxiter=1000):
+    def __init__(self, df, proportions, recodes={}, epsilon=.01, maxiter=1000):
         self.df = df
         self.rows, self.cols = self.df.shape
         self.recodes = recodes
-        self.target_pop = target_pop
+        self.proportions = proportions
         self.epsilon = epsilon
         self.maxiter = maxiter
-        self.key_col = key_col
 
     def calc(self):
-        temp_df = pandas.DataFrame(self.df)
-        temp_df['weight'] = numpy.ones(self.rows)
+        self.df['weight'] = numpy.ones(self.rows)
 
-        weight_diff = 99
-        weight_diff_old = 9999999
+        def update_weights(row):
+            if int(row[var]) in self.proportions[var]:
+                return self.proportions[var][int(row[var])] * row['weight'] / (group_sums[int(row[var])] / self.rows)
+            return row['weight']
+
+        weight_diff = 99  # magic number...
+        weight_diff_old = 9999999  # magic number...
         it = 0
         while weight_diff < weight_diff_old * (1 - self.epsilon) and it < self.maxiter:
             it += 1
-            weight_old = temp_df['weight'].values.tolist()
+            weight_old = self.df['weight'].values.tolist()
 
-            for var in self.target_pop:
-                h = temp_df.groupby(var)
-                temp_df['weight'] = temp_df.apply(
-                    lambda row: self.target_pop[var][row[var]] *
-                    row['weight'] /
-                    (h.get_group(row[var]).sum()['weight'] / self.rows),
-                    axis=1
-                )
+            for var in self.proportions:
+                group_sums = {group[0]: group[1].sum()['weight'] for group in self.df.groupby(var)}
+                self.df['weight'] = self.df.apply(update_weights, axis=1)
 
             weight_diff_old = weight_diff
-            weight_diff = sum(abs(temp_df['weight'].values - weight_old))
+            weight_diff = sum(abs(self.df['weight'].values - weight_old))
 
-        self.weights = temp_df[[self.key_col, 'weight']]
-        return self.weights
+    def weighting_loss(self):
+        return len(self.df.weight) * sum(self.df.weight.values ** 2) / self.df.weight.sum() ** 2 - 1
