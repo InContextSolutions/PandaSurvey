@@ -9,7 +9,8 @@ def read(fname):
 
 install_requires = [
     'numpy',
-    'pandas'
+    'pandas',
+    'numexpr'
 ]
 
 tests_require = [
