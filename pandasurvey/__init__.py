@@ -15,9 +15,9 @@ def cli():
 
     args = parser.parse_args()
     if args.infile.endswith('csv'):
-        df = pandas.from_csv(args.infile)
+        df = pandas.read_csv(args.infile)
     else:
-        df = pandas.from_excel(args.infile)
+        df = pandas.read_excel(args.infile)
 
     weights = {}
     with open(args.target) as csv_in:
@@ -31,6 +31,6 @@ def cli():
     dfout = rk.calc()
 
     if args.outfile.endswith('csv'):
-        dfout.to_csv(args.outfile)
+        dfout.to_csv(args.outfile, index=False)
     else:
-        dfout.to_excel(args.outfile)
+        dfout.to_excel(args.outfile, index=False)
