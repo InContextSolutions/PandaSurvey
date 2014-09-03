@@ -9,29 +9,18 @@ def load_people():
     return pandas.read_csv(path)
 
 
-def load_rengine_weights():
-    path = os.path.join(THIS_DIRECTORY, "study_1614.csv")
+def load_sample_study():
+    path = os.path.join(THIS_DIRECTORY, "SampleStudy.csv")
     return pandas.read_csv(path)
 
 
-def load_target_weights():
-    path = os.path.join(THIS_DIRECTORY, "target_weights_1614.csv")
-    targets = pandas.read_csv(path)
-    ret = {}
-    for i in targets.iterrows():
-        if i[1]['RespondentGroup'] not in ret:
-            ret[i[1]['RespondentGroup']] = {}
-        ret[i[1]['RespondentGroup']][i[1]['Value']] = i[1]['Target']
-    for i in ret['Cell']:
-        ret['Cell'][i] = 1. / len(ret['Cell'])
-    return ret
-
-
-def load_teniters():
-    path = os.path.join(THIS_DIRECTORY, "teniter_cellweights.csv")
-    return pandas.read_csv(path)
-
-
-def load_thirtyiters():
-    path = os.path.join(THIS_DIRECTORY, "thirtyiter_weights.csv")
-    return pandas.read_csv(path)
+def load_sample_weights():
+    path = os.path.join(THIS_DIRECTORY, "SampleWeights.csv")
+    weights = {}
+    with open(path) as csv_in:
+        for line in csv_in:
+            demo, category, proportion = line.split(',')
+            if demo not in weights:
+                weights[demo] = {}
+            weights[demo][int(category)] = float(proportion)
+    return weights

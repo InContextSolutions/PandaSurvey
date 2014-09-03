@@ -1,4 +1,3 @@
-RespondentGroup,Value,Target
 AgeRecode,1,0.07
 AgeRecode,2,0.22
 AgeRecode,3,0.2
@@ -15,10 +14,3 @@ HispanicRecode,1,0.09
 HispanicRecode,2,0.91
 RaceRecoder1,0,0.15
 RaceRecoder1,1,0.85
-Cell,2810,300
-Cell,2811,300
-Cell,2812,300
-Cell,2813,300
-Cell,2814,300
-Cell,2815,300
-Cell,2816,300
