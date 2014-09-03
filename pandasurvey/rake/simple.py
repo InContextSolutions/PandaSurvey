@@ -1,10 +1,9 @@
 import numpy
 from pandasurvey.base import SurveyWeightBase
 from pandasurvey.mixins.recode import RecodeMixin
-from pandasurvey.mixins.ezpandas import PandasMixin
 
 
-class SimpleRake(SurveyWeightBase, RecodeMixin, PandasMixin):
+class SimpleRake(SurveyWeightBase, RecodeMixin):
 
     def __init__(self, df, target_proportions, recodes={}, epsilon=.01, maxiter=1000):
         self.df = df

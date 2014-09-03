@@ -1,9 +1,0 @@
-click
-numexpr
-numpy
-pandas
-python-dateutil
-pytz
-simplejson
-six
-wsgiref

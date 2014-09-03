@@ -10,12 +10,11 @@ def read(fname):
 install_requires = [
     'numpy',
     'pandas',
-    'numexpr'
 ]
 
 tests_require = [
     'nose',
-    'coverage'
+    'coverage',
 ]
 
 setup(
