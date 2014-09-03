@@ -2,7 +2,6 @@ import unittest
 import numpy as np
 import pandas as pd
 from pandasurvey.rake.simple import SimpleRake
-from pandasurvey.utils.bootstrap import bootstrap
 import pandasurvey.datasets as datasets
 
 
