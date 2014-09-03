@@ -1,5 +1,5 @@
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 import pandasurvey
 
 
@@ -24,10 +24,10 @@ setup(
     author="InContext Solutions",
     url="http://www.incontextsolutions.com/",
     description="A survey weighting utility for use with Pandas dataframes",
-    packages=["pandasurvey"],
+    packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     long_description=read('README.md'),
     setup_requires=['nose'],
     install_requires=install_requires,
     tests_require=tests_require,
-    entry_points={'console_scripts': ['simplerake = pandasurvey.cli']},
+    entry_points={'console_scripts': ['simplerake = pandasurvey:cli']},
 )
