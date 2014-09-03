@@ -1,38 +1,38 @@
 import unittest
-import numpy as np
-import pandas as pd
+import numpy
 from pandasurvey.rake.simple import SimpleRake
 import pandasurvey.datasets as datasets
 
 
-class Test_Simple(unittest.TestCase):
+class TestSimpleRake(unittest.TestCase):
 
-    def test_simplerake_10iters(self):
+    def setUp(self):
+        self.prop = datasets.load_sample_proportions()
+        self.df = datasets.load_sample_study()
+        self.wt = datasets.load_sample_weights()
 
-        target_weights = datasets.load_target_weights()
-        target_weights['StudyCellId'] = target_weights.pop('Cell')
-        r = SimpleRake(
-            datasets.load_rengine_weights(), target_weights, 'RespondentKey', maxiter=10)
-        r.df.dropna(inplace=True)
+    def test_calc(self):
+        r = SimpleRake(self.df, self.prop, maxiter=10)
         r.calc()
-        compare_df = pd.merge(r.df, r.weights, on='RespondentKey')
 
-        simple_sample = []
-        report_sample = []
+        r.df['Weight'] = self.wt
+
+        results = []
+        alt = []
         targets = []
-        for demo in target_weights:
+        wt_sum = r.df['weight'].sum()
+        alt_wt_sum = r.df['Weight'].sum()
+        for demo in self.prop:
+            for value in self.prop[demo]:
+                subset = r.df[r.df[demo] == int(value)]
+                results.append(subset['weight'].sum() / wt_sum)
+                alt.append(subset['Weight'].sum() / alt_wt_sum)
+                targets.append(self.prop[demo][value])
 
-            for value in target_weights[demo]:
+        targets = numpy.array(targets)
+        results = numpy.array(results)
+        alt = numpy.array(alt)
 
-                # for found proportions
-                simple_sample.append(
-                    compare_df.query(demo + "==" + str(value)).sum()['weight'] / compare_df.sum()['weight'])
-                report_sample.append(
-                    compare_df.query(demo + "==" + str(value)).sum()['Weight'] / compare_df.sum()['Weight'])
-                targets.append(target_weights[demo][value])
-
-        simple_mse = (
-            (np.array(simple_sample) - np.array(targets)) ** 2).mean()
-        report_mse = (
-            (np.array(report_sample) - np.array(targets)) ** 2).mean()
-        self.assertLessEqual(simple_mse, report_mse)
+        mse = ((results - targets) ** 2).mean()
+        altmse = ((alt - targets) ** 2).mean()
+        self.assertLessEqual(mse, altmse)
