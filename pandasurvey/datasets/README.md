@@ -6,7 +6,6 @@
 
 ### Columns
 
-- PrimaryKey
 - Age
  - Non-negative integer
  - May include zeros
