@@ -1,6 +1,6 @@
 # PandaSurvey
 
-[![Build Status](https://api.shippable.com/projects/53fe43eedc23a7d6063a9b61/badge/master)](https://www.shippable.com/projects/53fe43eedc23a7d6063a9b61)
+[![Build Status](https://api.shippable.com/projects/540792b17f4070430a226dc0/badge/master)](https://www.shippable.com/projects/540792b17f4070430a226dc0)
 
 Survey Weighting Methods for Pandas DataFrames
 
