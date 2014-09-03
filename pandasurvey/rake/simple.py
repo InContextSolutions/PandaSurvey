@@ -14,7 +14,8 @@ class SimpleRake(SurveyWeightBase, RecodeMixin):
         self.maxiter = maxiter
 
     def calc(self):
-        self.df['weight'] = numpy.ones(self.rows)
+        df_out = self.df.copy()
+        df_out['weight'] = numpy.ones(self.rows)
 
         def update_weights(row):
             if int(row[var]) in self.proportions[var]:
@@ -26,14 +27,15 @@ class SimpleRake(SurveyWeightBase, RecodeMixin):
         it = 0
         while weight_diff < weight_diff_old * (1 - self.epsilon) and it < self.maxiter:
             it += 1
-            weight_old = self.df['weight'].values.tolist()
+            weight_old = df_out['weight'].values.tolist()
 
             for var in self.proportions:
-                group_sums = {group[0]: group[1].sum()['weight'] for group in self.df.groupby(var)}
-                self.df['weight'] = self.df.apply(update_weights, axis=1)
+                group_sums = {group[0]: group[1].sum()['weight'] for group in df_out.groupby(var)}
+                df_out['weight'] = df_out.apply(update_weights, axis=1)
 
             weight_diff_old = weight_diff
-            weight_diff = sum(abs(self.df['weight'].values - weight_old))
+            weight_diff = sum(abs(df_out['weight'].values - weight_old))
+        return df_out
 
-    def weighting_loss(self):
-        return len(self.df.weight) * sum(self.df.weight.values ** 2) / self.df.weight.sum() ** 2 - 1
+    def weighting_loss(self, df):
+        return len(df.weight) * sum(df.weight.values ** 2) / df.weight.sum() ** 2 - 1

@@ -13,18 +13,18 @@ class TestSimpleRake(unittest.TestCase):
 
     def test_calc(self):
         r = SimpleRake(self.df, self.prop, maxiter=10)
-        r.calc()
+        df_out = r.calc()
 
-        r.df['Weight'] = self.wt
+        df_out['Weight'] = self.wt
 
         results = []
         alt = []
         targets = []
-        wt_sum = r.df['weight'].sum()
-        alt_wt_sum = r.df['Weight'].sum()
+        wt_sum = df_out['weight'].sum()
+        alt_wt_sum = df_out['Weight'].sum()
         for demo in self.prop:
             for value in self.prop[demo]:
-                subset = r.df[r.df[demo] == int(value)]
+                subset = df_out[r.df[demo] == int(value)]
                 results.append(subset['weight'].sum() / wt_sum)
                 alt.append(subset['Weight'].sum() / alt_wt_sum)
                 targets.append(self.prop[demo][value])
