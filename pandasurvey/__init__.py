@@ -1,5 +1,5 @@
 import pandas
-from pandasurvey.rake import SimpleRake
+from pandasurvey.rake.simple import SimpleRake
 
 __version__ = '0.0.1'
 
