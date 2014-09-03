@@ -2,7 +2,7 @@ language: python
 python:
     - 2.7
 env:
-    secure: Vfzi0GBJMyCj9079XCoUDoEfhmqGu4MSYEgr07yWxfKZR9g9mB35XxM5fAk2X6Qk/2ltfdSIpDNBJts+/6uXJWHShFDlh9ha6QWJkg/4B5esi9mvGuNolhzDhmzkKLUpWpRVn+NjVbR3MwM7iWkz2ajEFtHsVLl3DEtkEjKNliUPqzzDQRojMbS1F1W4U+N5y+XmS/8je3iYSSA0WDlqsTkTrhMNkHsb6z0VSaMV6qStxzIXPHO3wP9jlvX+yYtIS2IFN/h+fbDewbn8D5akBTimH9Ey1lWTvwIuCtXwrT5eg1AFvAjOFW4exOKZ4wkuHjmk7gvjF3x75sopI4jjCg==
+    secure: hylQe7KTYqiaUUe1duNIHnsg6PiWP5syVOrU0MRZ1tUA4SzPfaTegKySQLLCjeXgG54dtOpJIfDHcCm3FNcaM3bl+Gvq7aw4V0kK7mxsmiCdEzSaVUrdMJuhFeSM7x5uNAqttx3KPi79YC3O36bSOtVgZK/r9acDP1sxFhfMSQ5q4OCtkuZI1jl5cgafxWa3+mToUKad8l+q/+dKj35NcU3ozryUXyuV2dDWqnCCRC+VwqVB4GzKDc6dw+qnTHwOsbRgf0TyytiLe1+Lc4oOVg65cxpusex7RctlsYLOfsWqOnesz604RWfnnrzhakZs/BUEZrGiGbV9ZSFGxozlDQ==
 before_install:
     - pip install pep8
 install:
