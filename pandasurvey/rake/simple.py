@@ -1,4 +1,3 @@
-import sys
 import math
 from functools import partial
 import numpy
