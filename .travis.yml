@@ -5,6 +5,7 @@ env:
     secure: Vfzi0GBJMyCj9079XCoUDoEfhmqGu4MSYEgr07yWxfKZR9g9mB35XxM5fAk2X6Qk/2ltfdSIpDNBJts+/6uXJWHShFDlh9ha6QWJkg/4B5esi9mvGuNolhzDhmzkKLUpWpRVn+NjVbR3MwM7iWkz2ajEFtHsVLl3DEtkEjKNliUPqzzDQRojMbS1F1W4U+N5y+XmS/8je3iYSSA0WDlqsTkTrhMNkHsb6z0VSaMV6qStxzIXPHO3wP9jlvX+yYtIS2IFN/h+fbDewbn8D5akBTimH9Ey1lWTvwIuCtXwrT5eg1AFvAjOFW4exOKZ4wkuHjmk7gvjF3x75sopI4jjCg==
 before_install:
     - pip install pep8
+    - pip install pyflakes
 install:
     - pip install . --use-mirrors
 script:
