@@ -29,5 +29,5 @@ setup(
     setup_requires=['nose'],
     install_requires=install_requires,
     tests_require=tests_require,
-    entry_points={},
+    entry_points={'console_scripts': ['simplerake = pandasurvey.cli']},
 )
