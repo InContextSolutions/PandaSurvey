@@ -16,7 +16,7 @@ class SimpleRake(SurveyWeightBase, RecodeMixin, PandasMixin):
     df : Pandas.DataFrame
         A dataframe with the appropriate demographics
     target_pop : dict
-        Dictionary with demographics as keys pointed at dictionary 
+        Dictionary with demographics as keys pointed at dictionary
         with demographic values pointed at the target proportions
         Ex.
         {

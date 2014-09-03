@@ -15,11 +15,13 @@ class Testpandasurvey(unittest.TestCase):
         self.df = datasets.load_people()
 
     def test_smoke(self):
-        r = SimpleRake(self.df, self.target_pop, 'PrimaryKey', recodes= self.recodes,)
+        r = SimpleRake(
+            self.df, self.target_pop, 'PrimaryKey', recodes=self.recodes,)
         self.assertIsNotNone(r)
 
     def test_recode(self):
-        r = SimpleRake(self.df, self.target_pop, 'PrimaryKey', recodes = self.recodes)
+        r = SimpleRake(self.df, self.target_pop,
+                       'PrimaryKey', recodes=self.recodes)
         r.recode()
         self.assertEqual(r.df['Age'].values[0], 8)
         self.assertEqual(r.df['MaritalStatus'].values[2], 2)

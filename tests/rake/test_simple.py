@@ -36,4 +36,4 @@ class Test_Simple(unittest.TestCase):
             (np.array(simple_sample) - np.array(targets)) ** 2).mean()
         report_mse = (
             (np.array(report_sample) - np.array(targets)) ** 2).mean()
-        self.assertLessEqual(simple_mse , report_mse)
+        self.assertLessEqual(simple_mse, report_mse)
