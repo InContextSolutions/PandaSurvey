@@ -5,12 +5,10 @@ Subpackages
 -----------
 
 .. toctree::
+    :maxdepth: 1 
 
     PandaSurvey.datasets
     PandaSurvey.rake
-
-Submodules
-----------
 
 PandaSurvey.base module
 -----------------------
