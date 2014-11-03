@@ -1,5 +1,5 @@
 import unittest
-import pandasurvey.datasets as datasets
+import PandaSurvey.datasets as datasets
 
 
 class TestLoad(unittest.TestCase):

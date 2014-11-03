@@ -1,7 +1,7 @@
 import unittest
 import numpy
-from pandasurvey.rake.simple import SimpleRake
-import pandasurvey.datasets as datasets
+from PandaSurvey.rake.simple import SimpleRake
+from PandaSurvey import datasets
 
 
 class TestRake(unittest.TestCase):

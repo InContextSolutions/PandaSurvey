@@ -1,7 +1,7 @@
 import numpy
 import pandas
-from pandasurvey.base import SurveyWeightBase
-from pandasurvey.mixins.recode import RecodeMixin
+from PandaSurvey.base import SurveyWeightBase
+from PandaSurvey.mixins.recode import RecodeMixin
 
 
 BIG_M = 99
