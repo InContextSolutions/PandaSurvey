@@ -1,10 +1,4 @@
-import os
-from setuptools import setup, find_packages
-import pandasurvey
-
-
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+from setuptools import setup
 
 
 install_requires = [
@@ -14,20 +8,18 @@ install_requires = [
 
 tests_require = [
     'nose',
-    'coverage',
-    'pyflakes',
+    'coverage'
 ]
 
 setup(
-    name="pandasurvey",
-    version=pandasurvey.__version__,
+    name="PandaSurvey",
+    version="0.100",
     author="InContext Solutions",
+    author_email="quant@incontextsolutions.com",
     url="http://www.incontextsolutions.com/",
-    description="A survey weighting utility for use with Pandas dataframes",
-    packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-    long_description=read('README.md'),
+    description="A survey weighting utility for Pandas' DataFrames",
+    packages=['PandaSurvey'],
     setup_requires=['nose'],
     install_requires=install_requires,
-    tests_require=tests_require,
-    entry_points={'console_scripts': ['simplerake = pandasurvey:cli']},
+    tests_require=tests_require
 )
