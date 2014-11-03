@@ -1,41 +1,60 @@
 import numpy
+import pandas
 from pandasurvey.base import SurveyWeightBase
 from pandasurvey.mixins.recode import RecodeMixin
 
 
+BIG_M = 99
+EPSILON = 1e-3
+MAX_ITER = 1000
+
+
 class SimpleRake(SurveyWeightBase, RecodeMixin):
 
-    def __init__(self, df, proportions, recodes={}, epsilon=.01, maxiter=1000):
+    def __init__(self, df, target_proportions, recodes={}, epsilon=EPSILON, maxiter=MAX_ITER):
         self.df = df
         self.rows, self.cols = self.df.shape
         self.recodes = recodes
-        self.proportions = proportions
+        self.target_proportions = target_proportions
+        self.demos = self.target_proportions.keys()
         self.epsilon = epsilon
         self.maxiter = maxiter
 
-    def calc(self):
-        df_out = self.df.copy()
-        df_out['weight'] = numpy.ones(self.rows)
+    def calc(self, L2=False):
+        warning_state = pandas.options.mode.chained_assignment
+        pandas.options.mode.chained_assignment = None
 
-        def update_weights(row):
-            if int(row[var]) in self.proportions[var]:
-                return self.proportions[var][int(row[var])] * row['weight'] / (group_sums[int(row[var])] / self.rows)
-            return row['weight']
+        delta = BIG_M
+        delta0 = BIG_M + 1
+        num_iters = 0
 
-        weight_diff = 99  # magic number...
-        weight_diff_old = 9999999  # magic number...
-        it = 0
-        while weight_diff < weight_diff_old * (1 - self.epsilon) and it < self.maxiter:
-            it += 1
-            weight_old = df_out['weight'].values.tolist()
+        new_df = self.df.copy()
+        new_df['weight'] = numpy.ones(self.rows)
 
-            for var in self.proportions:
-                group_sums = {group[0]: group[1].sum()['weight'] for group in df_out.groupby(var)}
-                df_out['weight'] = df_out.apply(update_weights, axis=1)
+        def _update(row):
+            value = int(row[var])
+            return self.target_proportions[var][value] * row['weight'] / (mass[value] / self.rows)
 
-            weight_diff_old = weight_diff
-            weight_diff = sum(abs(df_out['weight'].values - weight_old))
-        return df_out
+        try:
+            while delta < delta0 * (1 - self.epsilon) and num_iters < self.maxiter:
+                wt = new_df['weight']
 
-    def weighting_loss(self, df):
-        return len(df.weight) * sum(df.weight.values ** 2) / df.weight.sum() ** 2 - 1
+                for var in self.target_proportions:
+                    mass = {group[0]: group[1].sum()['weight'] for group in new_df.groupby(var)}
+                    sub_df = new_df[new_df[var].isin(self.target_proportions[var])]
+                    sub_df['weight'] = sub_df.apply(_update, axis=1)
+                    new_df.update(sub_df)
+
+                delta0 = delta
+
+                if L2:
+                    delta = ((new_df['weight'] - wt) ** 2).sum()
+                else:
+                    delta = (new_df['weight'] - wt).abs().sum()
+
+                num_iters += 1
+        finally:
+            pandas.options.mode.chained_assignment = warning_state
+
+        new_df[self.demos] = new_df[self.demos].astype(int)
+        return new_df

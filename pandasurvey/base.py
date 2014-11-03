@@ -11,3 +11,7 @@ class SurveyWeightBase:
     @abstractmethod
     def calc(self):
         pass
+
+    def loss(self, weights):
+        n = len(weights)
+        return ((weights ** 2).sum() / weights.sum() ** 2) * n - 1
