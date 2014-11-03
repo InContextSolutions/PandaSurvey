@@ -22,12 +22,12 @@ class TestRake(unittest.TestCase):
         self.df = datasets.load_people()
 
     def test_smoke(self):
-        r = SimpleRake(self.df, self.target_proportions, recodes=self.recodes)
+        r = SimpleRake(self.df, self.target_proportions)
         self.assertIsNotNone(r)
 
     def test_recode(self):
-        r = SimpleRake(self.df, self.target_proportions, recodes=self.recodes)
-        r.recode()
+        r = SimpleRake(self.df, self.target_proportions)
+        r.recode(self.recodes)
         self.assertEqual(r.df['Age'].values[0], 8)
         self.assertEqual(r.df['MaritalStatus'].values[2], 2)
 
@@ -69,7 +69,7 @@ class TestSimpleRake(unittest.TestCase):
         self.assertLessEqual(self.rake.loss(df_out.weight), 1e-3)
 
     def test_calc_l2(self):
-        df_out = self.rake.calc(L2=True)
+        df_out = self.rake.calc(use_l2=True)
         df_out['target_weight'] = self.wt
         mse, altmse = self.calc_mse(df_out)
         self.assertLessEqual(mse, altmse)

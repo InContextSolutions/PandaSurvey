@@ -94,7 +94,7 @@ def load_sample_proportions():
     +-------------+-------------+-------------------+
     """
     weights = {}
-    with open(_path("SampleStudy.csv")) as csv_in:
+    with open(_path("SampleWeights.csv")) as csv_in:
         for line in csv_in:
             demo, category, proportion = line.split(',')
             if demo not in weights:
