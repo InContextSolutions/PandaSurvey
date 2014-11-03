@@ -13,7 +13,7 @@ extensions = [
 
 templates_path = ['_templates']
 source_suffix = '.rst'
-master_doc = 'PandaSurvey'
+master_doc = 'index'
 project = u'PandaSurvey'
 copyright = u'2014, InContext Solutions'
 version = '0.100'

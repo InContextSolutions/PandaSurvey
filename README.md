@@ -12,6 +12,7 @@ Documentation available at [incontextsolutions.github.io/PandaSurvey](http://inc
 
 ```bash
 git clone git@github.com:InContextSolutions/PandaSurvey.git
+cd PandaSurvey
 pip install .
 ```
 
