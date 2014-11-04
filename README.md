@@ -4,7 +4,7 @@
 
 Survey weighting utility for the Pandas DataFrame.
 
-Documentation available at [incontextsolutions.github.io/PandaSurvey](http://incontextsolutions.github.io/PandaSurvey).
+Documentation available at [incontextsolutions.github.io/pandasurvey/](http://incontextsolutions.github.io/pandasurvey/).
 
 ## Installation
 
