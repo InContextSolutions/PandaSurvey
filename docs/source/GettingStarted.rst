@@ -23,14 +23,12 @@ From PyPI
 Basic Usage
 -----------
 
-The goal of this utility is two transform a dataset consisting of raw demographic data from a survey into a dataset more appropriate for inference over a broader population. Two sample datasets are included for testing purposes.
+The goal of this utility is to calculate respondent weights that allow one to transform a dataset into something more appropriate for inference. Two sample datasets are included for testing purposes. As of this version of PandaSurvey, only raking has been implemented.
 
 Example
 ~~~~~~~
 
-As an example, we'll rake the include `people` dataset to match a target demographic consisting of 80% female and 50% married respondents.
-
-First, we import the `people` dataset and view summary information.
+We'll rake the included `People` dataset to match a target demographic consisting of 80% female and 50% married respondents. First, we import the `People` dataset and view summary information.
 
 .. code-block:: ipython
 
@@ -67,9 +65,9 @@ First, we import the `people` dataset and view summary information.
     1              2159  125  388  62  2171
     2              2090  411  499  99  1995
 
-We can see that the sample is about evenly split on gender and 42.5% of respondents are married.
+From above, the unweighted sample is about evenly split on gender and slightly more than 40% of the respondents are married (status equals one).
 
-For our example, we only care about married (status equals 1) and unmarried (status does not equal 1). We're going to `recode` unmarried responses to equal 2, but first we need to instantiate the SimpleRake object:
+We only care about married and unmarried status, so we can aggregate responses above one together. We're going to `recode` non-married responses to equal two. First, we create a SimpleRake object:
 
 .. code-block:: ipython
 
@@ -90,7 +88,7 @@ Note the second parameter we gave SimpleRake. That dictionary defines the target
     1              2159  2746
     2              2090  3004
 
-We've transformed our dataset and are ready to apply weights.
+We've transformed our dataset and are ready to calculate weights.
 
 .. code-block:: ipython
 
@@ -105,7 +103,9 @@ We've transformed our dataset and are ready to apply weights.
     3       1              1  0.485772
     4       2              2  1.347693
 
-When `calc` is called, the raking procedure iteratively updates weights for each row until the marginal distributions match the target proportions. So, how did we do?
+When `calc` is called, the raking procedure iteratively updates weights (starting from uniform weighting) until the marginal distributions match the target proportions.
+
+So, how did we do?
 
 .. code-block:: ipython
 
@@ -118,4 +118,6 @@ When `calc` is called, the raking procedure iteratively updates weights for each
     In [16]: rk.loss(wt_df.weight.values)
     Out[16]: 0.37643439668734002
 
-We can see that the gender and marital status proportions are nearly optimal. The last statement (`loss`) approximates the increase in variance due to weighting. We can approximate the design effect by 1 plus the loss (about 1.38, in this case).
+We can see that the gender and marital status proportions are nearly equal to the target (within a reasonable convergence tolerance).
+
+The last statement (`loss`) approximates the increase in variance due to weighting. We can approximate the design effect by adding one to the loss (about 1.38, in this case).
