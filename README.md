@@ -1,6 +1,6 @@
 # PandaSurvey
 
-[![Build Status](https://api.shippable.com/projects/5411f298814f6b1f6a9fa132/badge?branchName=master)](https://app.shippable.com/projects/5411f298814f6b1f6a9fa132/builds/latest)
+[![Build Status](https://travis-ci.org/InContextSolutions/PandaSurvey.svg)](https://travis-ci.org/InContextSolutions/PandaSurvey)
 
 Survey weighting utility for the Pandas DataFrame.
 
