@@ -13,7 +13,7 @@ tests_require = [
 
 setup(
     name="PandaSurvey",
-    version="0.11",
+    version="0.111",
     author="InContext Solutions",
     author_email="quant@incontextsolutions.com",
     url="http://www.incontextsolutions.com/",
