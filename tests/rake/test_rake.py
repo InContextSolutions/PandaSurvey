@@ -1,7 +1,7 @@
 import unittest
 import numpy
-from PandaSurvey.rake.simple import SimpleRake
-from PandaSurvey import datasets
+import PandaSurvey as ps
+from PandaSurvey.simple import SimpleRake
 
 
 class TestRake(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestRake(unittest.TestCase):
             }
         }
 
-        self.df = datasets.load_people()
+        self.df = ps.load_people()
 
     def test_smoke(self):
         r = SimpleRake(self.df, self.target_proportions)
@@ -35,9 +35,9 @@ class TestRake(unittest.TestCase):
 class TestSimpleRake(unittest.TestCase):
 
     def setUp(self):
-        self.prop = datasets.load_sample_proportions()
-        self.df = datasets.load_sample_study()
-        self.wt = datasets.load_sample_weights()
+        self.prop = ps.load_sample_proportions()
+        self.df = ps.load_sample_study()
+        self.wt = ps.load_sample_weights()
         self.rake = SimpleRake(self.df, self.prop)
 
     def calc_mse(self, df):

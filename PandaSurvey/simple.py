@@ -1,6 +1,6 @@
 import numpy
 import pandas
-from PandaSurvey.base import SurveyWeightBase
+from .base import SurveyWeightBase
 
 
 BIG_M = 99
