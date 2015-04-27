@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PandaSurvey package &mdash; PandaSurvey  documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PandaSurvey  documentation" href="index.html" />
+    <link rel="prev" title="Welcome to PandaSurvey’s documentation!" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to PandaSurvey’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PandaSurvey  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pandasurvey-package">
+<h1>PandaSurvey package<a class="headerlink" href="#pandasurvey-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-PandaSurvey.base">
+<span id="pandasurvey-base-module"></span><h2>PandaSurvey.base module<a class="headerlink" href="#module-PandaSurvey.base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="PandaSurvey.base.SurveyWeightBase">
+<em class="property">class </em><code class="descclassname">PandaSurvey.base.</code><code class="descname">SurveyWeightBase</code><span class="sig-paren">(</span><em>df</em>, <em>proportions</em>, <em>recodes={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PandaSurvey/base.html#SurveyWeightBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.base.SurveyWeightBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Abstract base class for survey weighting method.</p>
+<dl class="method">
+<dt id="PandaSurvey.base.SurveyWeightBase.calc">
+<code class="descname">calc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PandaSurvey/base.html#SurveyWeightBase.calc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.base.SurveyWeightBase.calc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculation step must be implemented here.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PandaSurvey.base.SurveyWeightBase.loss">
+<code class="descname">loss</code><span class="sig-paren">(</span><em>weights</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PandaSurvey/base.html#SurveyWeightBase.loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.base.SurveyWeightBase.loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Describes the inflation in the variance of sample estimates that can be attributed to weighting. See <em>Applied Survey Data Analysis</em> (2010) by Heeringa et al. for more information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>weights</strong> (<em>numpy.array</em>) &#8211; array of individual weights</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PandaSurvey.base.SurveyWeightBase.recode">
+<code class="descname">recode</code><span class="sig-paren">(</span><em>encoders</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PandaSurvey/base.html#SurveyWeightBase.recode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.base.SurveyWeightBase.recode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recodes demographic information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>encoders</strong> (<em>dict</em>) &#8211; Mapping of demographic keys to respective recoding function. Need only define those demographic dimensions that need to be recoded.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-PandaSurvey.simple">
+<span id="pandasurvey-simple-module"></span><h2>PandaSurvey.simple module<a class="headerlink" href="#module-PandaSurvey.simple" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="PandaSurvey.simple.SimpleRake">
+<em class="property">class </em><code class="descclassname">PandaSurvey.simple.</code><code class="descname">SimpleRake</code><span class="sig-paren">(</span><em>df</em>, <em>proportions</em>, <em>epsilon=0.001</em>, <em>maxiter=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PandaSurvey/simple.html#SimpleRake"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.simple.SimpleRake" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#PandaSurvey.base.SurveyWeightBase" title="PandaSurvey.base.SurveyWeightBase"><code class="xref py py-class docutils literal"><span class="pre">PandaSurvey.base.SurveyWeightBase</span></code></a></p>
+<p>Rake weighting implementation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>df</strong> (<em>pandas.DataFrame</em>) &#8211; The observations to be weighted.</li>
+<li><strong>proportions</strong> (<em>dict</em>) &#8211; A dictionary of the target proportions for each demographic and response.</li>
+<li><strong>epsilon</strong> (<em>float</em>) &#8211; Convergence threshold for the raking procedure.</li>
+<li><strong>maxiter</strong> (<em>int</em>) &#8211; Maximum number of iterations for the raking procedure.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="PandaSurvey.simple.SimpleRake.calc">
+<code class="descname">calc</code><span class="sig-paren">(</span><em>use_l2=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PandaSurvey/simple.html#SimpleRake.calc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.simple.SimpleRake.calc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates individual weights.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>use_l2</strong> (<em>boolean</em>) &#8211; Determines if convergence is measured using the L2 norm of the change in weights. By default, the L1 norm is used.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-PandaSurvey">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-PandaSurvey" title="Permalink to this headline">¶</a></h2>
+<p>PandaSurvey includes two unique datasets for testing purpuses: <cite>People</cite> and a sample study. The <cite>People</cite> file is from the 2010 US Census. The sample study is from a small survey performed at InContext Solutions in 2014 (specific survey details withheld)</p>
+<dl class="function">
+<dt id="PandaSurvey.load_people">
+<code class="descclassname">PandaSurvey.</code><code class="descname">load_people</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PandaSurvey.html#load_people"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.load_people" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the <cite>People</cite> dataset as a DataFrame. The data consists of 9999 individuals with age, disability status, marital status, race, and gender demographic information. Columns and their codes are described below:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Age</dt>
+<dd><ul class="first last simple">
+<li>Non-negative integer</li>
+<li>May include zeros</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Disability</dt>
+<dd><ul class="first last simple">
+<li>1: Disabled</li>
+<li>2: Not disabled</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>MarritalStatus</dt>
+<dd><ul class="first last simple">
+<li>1: Married</li>
+<li>2: Widowed</li>
+<li>3: Divorced</li>
+<li>4: Separated</li>
+<li>5: Never married or under 15 years old</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Race</dt>
+<dd><ul class="first last simple">
+<li>1: White alone</li>
+<li>2: Black or African American alone</li>
+<li>3: American Indian alone</li>
+<li>4: Alaska Native alone</li>
+<li>5: American Indian and Alaska Native tribes specified; or American Indian or Alaska native, not specified and no other races</li>
+<li>6: Asian alone</li>
+<li>7: Native Hawaiian and Other Pacific Islander alone</li>
+<li>8: Some other race alone</li>
+<li>9: Two or more major race groups</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Gender</dt>
+<dd><ul class="first last simple">
+<li>1: Male</li>
+<li>2: Female</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="PandaSurvey.load_sample_proportions">
+<code class="descclassname">PandaSurvey.</code><code class="descname">load_sample_proportions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PandaSurvey.html#load_sample_proportions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.load_sample_proportions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the target sample proportions that correspond to the sample survey.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="29%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Demographic</th>
+<th class="head">Coded Value</th>
+<th class="head">Target Proportion</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Age</td>
+<td>1</td>
+<td>0.07</td>
+</tr>
+<tr class="row-odd"><td>Age</td>
+<td>2</td>
+<td>0.22</td>
+</tr>
+<tr class="row-even"><td>Age</td>
+<td>3</td>
+<td>0.2</td>
+</tr>
+<tr class="row-odd"><td>Age</td>
+<td>4</td>
+<td>0.2</td>
+</tr>
+<tr class="row-even"><td>Age</td>
+<td>5</td>
+<td>0.21</td>
+</tr>
+<tr class="row-odd"><td>Gender</td>
+<td>1</td>
+<td>0.5</td>
+</tr>
+<tr class="row-even"><td>Gender</td>
+<td>2</td>
+<td>0.5</td>
+</tr>
+<tr class="row-odd"><td>Income</td>
+<td>1</td>
+<td>0.17</td>
+</tr>
+<tr class="row-even"><td>Income</td>
+<td>2</td>
+<td>0.21</td>
+</tr>
+<tr class="row-odd"><td>Income</td>
+<td>3</td>
+<td>0.25</td>
+</tr>
+<tr class="row-even"><td>Income</td>
+<td>4</td>
+<td>0.16</td>
+</tr>
+<tr class="row-odd"><td>Income</td>
+<td>5</td>
+<td>0.11</td>
+</tr>
+<tr class="row-even"><td>Hispanic</td>
+<td>1</td>
+<td>0.09</td>
+</tr>
+<tr class="row-odd"><td>Hispanic</td>
+<td>2</td>
+<td>0.91</td>
+</tr>
+<tr class="row-even"><td>Race</td>
+<td>0</td>
+<td>0.15</td>
+</tr>
+<tr class="row-odd"><td>Race</td>
+<td>1</td>
+<td>0.85</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="PandaSurvey.load_sample_study">
+<code class="descclassname">PandaSurvey.</code><code class="descname">load_sample_study</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PandaSurvey.html#load_sample_study"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.load_sample_study" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a sample dataset describing demographics in coded format from 2092 respondents. The study consists of 7 cells and demographics considered include age, gender, income, hispanic, and race.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PandaSurvey.load_sample_weights">
+<code class="descclassname">PandaSurvey.</code><code class="descname">load_sample_weights</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PandaSurvey.html#load_sample_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PandaSurvey.load_sample_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns individual weights from the sample survey calculated via a raking method previously implemented in R.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PandaSurvey package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-PandaSurvey.base">PandaSurvey.base module</a></li>
+<li><a class="reference internal" href="#module-PandaSurvey.simple">PandaSurvey.simple module</a></li>
+<li><a class="reference internal" href="#module-PandaSurvey">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to PandaSurvey&#8217;s documentation!</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/PandaSurvey.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Author.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.3</a>
+      
+      |
+      <a href="_sources/PandaSurvey.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>
