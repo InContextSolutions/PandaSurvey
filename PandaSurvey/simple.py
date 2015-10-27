@@ -50,9 +50,10 @@ class SimpleRake(SurveyWeightBase):
                 wt = new_df['weight']
 
                 for var in self.proportions:
-                    mass = {group[0]: group[1].sum()['weight'] for group in new_df.groupby(var)}
+                    mass = {group[0]: group[1].sum()['weight'] for group in new_df.groupby(var) if group[0] in self.proportions[var].keys()}
                     sub_df = new_df[new_df[var].isin(self.proportions[var])]
                     sub_df['weight'] = sub_df.apply(_update, axis=1, mass=mass)
+                    print 'mass/var', mass, var
                     new_df.update(sub_df)
 
                 delta0 = delta
