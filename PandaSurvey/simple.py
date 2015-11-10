@@ -43,7 +43,7 @@ class SimpleRake(SurveyWeightBase):
 
         def _update(row, mass, var, total_mass):
             value = int(row[var])
-            return self.proportions[var][value] * row['weight']  / (mass[value] / total_mass)
+            return self.proportions[var][value] * row['weight'] / (mass[value] / total_mass)
 
         try:
             while delta < delta0 * (1 - self.epsilon) and num_iters < self.maxiter:
@@ -52,7 +52,6 @@ class SimpleRake(SurveyWeightBase):
                 for var in self.proportions:
                     sub_df = new_df[new_df[var].isin([i for i in self.proportions[var] if self.proportions[var][i] > 0.0])].copy(deep=True)
                     mass = {group[0]: group[1].sum()['weight'] for group in sub_df.groupby(var)}
-                    mass_sum = sum([mass[key] for key in mass])
                     total_mass = sub_df.weight.sum()
                     sub_df['weight'] = sub_df.apply(_update, axis=1, mass=mass, var=var, total_mass=total_mass)
                     new_df.update(sub_df)
@@ -64,7 +63,6 @@ class SimpleRake(SurveyWeightBase):
                 else:
                     delta = (new_df['weight'] - wt).abs().sum()
                 num_iters += 1
-                print delta,num_iters
         finally:
             pandas.options.mode.chained_assignment = warning_state
 
