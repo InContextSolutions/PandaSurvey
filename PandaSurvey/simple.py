@@ -3,8 +3,8 @@ import pandas
 from .base import SurveyWeightBase
 
 
-BIG_M = 10000
-EPSILON = 1e-3
+BIG_M = 100000
+EPSILON = 1e-6
 MAX_ITER = 1000
 
 
