@@ -3,7 +3,7 @@ import pandas
 from .base import SurveyWeightBase
 
 
-BIG_M = 99
+BIG_M = 10000
 EPSILON = 1e-3
 MAX_ITER = 1000
 
@@ -41,19 +41,20 @@ class SimpleRake(SurveyWeightBase):
         new_df = self.df.copy()
         new_df['weight'] = numpy.ones(self.rows)
 
-        def _update(row, mass):
+        def _update(row, mass, var, total_mass):
             value = int(row[var])
-            return self.proportions[var][value] * row['weight'] / (mass[value] / self.rows)
+            return self.proportions[var][value] * row['weight']  / (mass[value] / total_mass)
 
         try:
             while delta < delta0 * (1 - self.epsilon) and num_iters < self.maxiter:
-                wt = new_df['weight']
+                wt = new_df['weight'].copy(deep=True)
 
                 for var in self.proportions:
-                    mass = {group[0]: group[1].sum()['weight'] for group in new_df.groupby(var) if group[0] in self.proportions[var].keys()}
-                    sub_df = new_df[new_df[var].isin([i for i in self.proportions[var] if self.proportions[var][i] > 0])]
-                    sub_df['weight'] = sub_df.apply(_update, axis=1, mass=mass)
-                    print 'mass/var', mass, var
+                    sub_df = new_df[new_df[var].isin([i for i in self.proportions[var] if self.proportions[var][i] > 0.0])].copy(deep=True)
+                    mass = {group[0]: group[1].sum()['weight'] for group in sub_df.groupby(var)}
+                    mass_sum = sum([mass[key] for key in mass])
+                    total_mass = sub_df.weight.sum()
+                    sub_df['weight'] = sub_df.apply(_update, axis=1, mass=mass, var=var, total_mass=total_mass)
                     new_df.update(sub_df)
 
                 delta0 = delta
@@ -62,10 +63,9 @@ class SimpleRake(SurveyWeightBase):
                     delta = ((new_df['weight'] - wt) ** 2).sum()
                 else:
                     delta = (new_df['weight'] - wt).abs().sum()
-
                 num_iters += 1
+                print delta,num_iters
         finally:
             pandas.options.mode.chained_assignment = warning_state
 
-        new_df[self.demos] = new_df[self.demos].astype(int)
         return new_df
